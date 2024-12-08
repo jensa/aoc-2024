@@ -12,8 +12,11 @@ def test_eq(e,o)
   o.split("").each_with_index do |op,i|
     if op == "+"
       q += e[i+1]
-    else
+    elsif op == "*"
       q *= e[i+1]
+    else
+      #concat op
+      q = "#{q}#{e[i+1]}".to_i
     end
   end
   return q
@@ -21,13 +24,14 @@ end
 
 def op_comb(len)
   if len <= 1
-    return ["+", "*"]
+    return ["+", "*", "|"]
   end
   last_len = op_comb(len-1)
   new_ones = []
   last_len.each do |last|
     new_ones << "*#{last}"
     new_ones << "+#{last}"
+    new_ones << "|#{last}"
   end
   return new_ones
 end
